@@ -1,14 +1,21 @@
 # toolz
 ### used by me at ubuntu server - maybe you need it, too :) 
 
-## grab update.sh - a wrapper for apt-based linuxes for updating the system
+# Table of contents
+[update helper](#update)
+[switch PHP version](#switch)
+[fix PHP ini settings](#fixphp)
+[lxc to hosts](#lxc2hosts)
+
+
+## grab update.sh - a wrapper for apt-based linuxes for updating the system <a name="update"></a>
 - runs apt update, apt dist-upgrade and removes unused packages at once
 - `wget https://raw.githubusercontent.com/wolxXx/toolz/main/update.sh`
 - `chmod +x update.sh`
 - `./update.sh`
 - one-line: `wget https://raw.githubusercontent.com/wolxXx/toolz/main/update.sh && chmod +x update.sh && ./update.sh`
 
-## grab switchPHP.sh - a tool for easily switching the PHP version, if installed
+## grab switchPHP.sh - a tool for easily switching the PHP version, if installed <a name="switch"></a>
 - easily disables all possible installed apache modules
 - enables the selected version as apache module and path variable
 - `wget https://raw.githubusercontent.com/wolxXx/toolz/main/switchPHP.sh`
@@ -30,7 +37,7 @@
     - sudo apt install apache2 apache2-dev apache2-utils apachetop mysql-server mysql-client mytop mycli php8.1 php8.1-bcmath php8.1-cli php8.1-curl php8.1-dev php8.1-gd php8.1-imap php8.1-intl php8.1-mbstring php8.1-mysql php8.1-opcache php8.1-readline php8.1-soap php8.1-tidy php8.1-xml php8.1-xsl php8.1-zip php-xdebug php-imagick unzip
 
 
-## grab fixPHP.sh - a tool for easily setting php.ini files for local development
+## grab fixPHP.sh - a tool for easily setting php.ini files for local development <a name="fixphp"></a>
 - setting php ini variables
   - enable short_open_tags
   - setting output_buffering to on 
@@ -47,3 +54,19 @@
 - `chmod +x fixPHP.sh`
 - `./fixPHP.sh`
 - one-line: `wget https://raw.githubusercontent.com/wolxXx/toolz/main/fixPHP.sh && chmod +x fixPHP.sh && ./fixPHP.sh`
+
+## grab lxc2hosts.sh - a tool for easily setting /etc/hosts mapping for lxc containers <a name="lxc2hosts"></a>
+- detects the ip address from each lxc container
+- writes them with the name of the container into /etc/hosts 
+- easy ssh into with `ssh user@my-lxc-container` without checking the ip address every time
+- needs super user rights to execute (sudo)
+- needs jq dependency installed
+  - jq allows you to read and evaluate json via bash
+  - `apt install jq` is your friend here 
+- be aware that running the script twice, the written content is doubled
+  - edit /etc/hosts file before running the script again
+  - the new contents are seperated by `######` - 100dd does the trick  
+- `wget https://raw.githubusercontent.com/wolxXx/toolz/main/lxc2hosts.sh`
+- `chmod +x lxc2hosts.sh`
+- `./lxc2hosts.sh`
+- one-line: `wget https://raw.githubusercontent.com/wolxXx/toolz/main/lxc2hosts.sh && chmod +x lxc2hosts.sh && ./lxc2hosts.sh`
