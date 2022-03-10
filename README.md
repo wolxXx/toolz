@@ -2,10 +2,10 @@
 ### used by me at ubuntu server - maybe you need it, too :) 
 
 # Table of contents
-[update helper](#update)
-[switch PHP version](#switch)
-[fix PHP ini settings](#fixphp)
-[lxc to hosts](#lxc2hosts)
+[update helper](#update)<br>
+[switch PHP version](#switch)<br>
+[fix PHP ini settings](#fixphp)<br>
+[lxc to hosts](#lxc2hosts)<br>
 
 
 ## grab update.sh - a wrapper for apt-based linuxes for updating the system <a name="update"></a>
