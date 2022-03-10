@@ -23,6 +23,6 @@ fi
 echo "" >>/etc/hosts
 echo "#######" >>/etc/hosts
 echo "" >>/etc/hosts
-lxc list --format=json | jq -r '.[] | .state.network.eth0.addresses[0].address + " " +  .name' >>/etc/hosts
+lxc list --format=json volatile.last_state.power=RUNNING | jq -r '.[] | .state.network.eth0.addresses[0].address + " " +  .name' >>/etc/hosts
 
 exit 0

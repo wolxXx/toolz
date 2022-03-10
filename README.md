@@ -57,6 +57,7 @@
 
 ## grab lxc2hosts.sh - a tool for easily setting /etc/hosts mapping for lxc containers <a name="lxc2hosts"></a>
 - detects the ip address from each lxc container
+  - attention: only running containers will be used!
 - writes them with the name of the container into /etc/hosts 
 - easy ssh into with `ssh user@my-lxc-container` without checking the ip address every time
 - needs super user rights to execute (sudo)
