@@ -3,7 +3,7 @@
 if [ -n "$1" ]; then
   echo "switching to $1";
   echo "";
-  echo "curren php info:"
+  echo "current php info:"
   php -v
   echo "";
   echo "";
@@ -13,14 +13,20 @@ else
   echo "Version parameter not supplied."
   echo "";
   echo "Usage: $0 <version>"
+  echo "$0 5.6"
+  echo "$0 6.0"
   echo "$0 7.1"
+  echo "$0 7.2"
+  echo "$0 7.3"
   echo "$0 7.4"
   echo "$0 8.0"
   echo "$0 8.1"
+  echo "$0 8.2"
+  echo "$0 8.3"
   echo "";
   echo "";
   
-  versions=( "3" "4" "5" "7" "8" );
+  versions=( "3" "4" "5" "6" "7" "8" );
   for i in "${versions[@]}"
   do
     (ls -h /usr/bin/php$i* | grep php) || echo "no php-$i version detected" 
