@@ -67,7 +67,7 @@
 
     ### docker file with ondrej php apt repository:
 ```
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 RUN apt-get update && apt-get install -y software-properties-common
 
@@ -90,6 +90,13 @@ RUN apt-get update -y && apt-get install -y php8.3 \
     php8.3-xml \
     php8.3-cli \
     php8.3-zip
+    
+RUN a2enmod headers
+RUN a2enmod rewrite
+
+RUN wget https://raw.githubusercontent.com/wolxXx/toolz/main/fixPHP.sh && chmod +x fixPHP.sh && ./fixPHP.sh
+
+CMD ["apachectl", "-D", "FOREGROUND"]
 ```
 
 
