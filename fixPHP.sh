@@ -19,10 +19,18 @@ do
             sed -i '/display_startup_errors/c\display_startup_errors = On' "$FILE"
             sed -i '/log_errors/c\log_errors = On' "$FILE"
             sed -i '/post_max_size/c\post_max_size = 4G' "$FILE"
-            sed -i '/upload_max_filesize/c\upload_max_filesize = 4G' "$FILE"
-            sed -i '/allow_url_include/c\allow_url_include = On' "$FILE"
+            sed -i '/upload_max_filesize/c\upload_max_filesize = 4G' "$FILE"            
             sed -i '/date.timezone/c\date.timezone = "Europe/Berlin"' "$FILE"
-
+            
+            
+            array=("5.3" "5.4" "5.5" "5.6" "6.0" "7.0" "7.1" "7.2" "7.3")            
+            for version in "${array[@]}"
+            do
+              if [[ $version == "$1" ]]
+              then
+                sed -i '/allow_url_include/c\allow_url_include = On' "$FILE"
+              fi
+            done
         fi
     done
 done
