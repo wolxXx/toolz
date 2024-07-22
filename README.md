@@ -96,6 +96,8 @@ RUN a2enmod rewrite
 
 RUN wget https://raw.githubusercontent.com/wolxXx/toolz/main/fixPHP.sh && chmod +x fixPHP.sh && ./fixPHP.sh
 
+WORKDIR /var/www
+
 CMD ["apachectl", "-D", "FOREGROUND"]
 ```
 
