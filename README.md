@@ -101,6 +101,7 @@ WORKDIR /var/www
 CMD ["apachectl", "-D", "FOREGROUND"]
 ```
 
+see dockerfiles in repo for base dockerfiles
 
 ## grab fixPHP.sh - a tool for easily setting php.ini files for local development <a name="fixphp"></a>
 - setting php ini variables
