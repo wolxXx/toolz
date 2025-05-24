@@ -24,6 +24,7 @@ else
   echo "$0 8.2"
   echo "$0 8.3"
   echo "$0 8.4"
+  echo "$0 8.5"
   echo "";
   echo "";
   

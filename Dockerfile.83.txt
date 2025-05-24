@@ -1,6 +1,21 @@
 FROM ubuntu:24.04
 
-RUN apt-get update && apt-get install -y software-properties-common
+RUN apt update && apt install -y  \
+    bash-completion  \
+    btop  \
+    cron  \
+    curl  \
+    git  \
+    htop  \
+    inetutils-ping  \
+    net-tools  \
+    rsync  \
+    software-properties-common  \
+    tzdata  \
+    unzip \
+    vim  \
+    wget
+ENV TZ="Europe/Berlin"
 
 RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 
