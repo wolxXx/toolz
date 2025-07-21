@@ -37,6 +37,15 @@ function show_running() {
     docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}\t{{.CreatedAt}}\t{{.Networks}}" | tail -n +2 | sort
 }
 
+# Displays basic Docker container information including:
+# - IP addresses and container names (sorted by IP)
+# - Full container listing with all details
+# Uses docker inspect to get network info and docker ps for container status
+function info() {
+    echo "Base container information:"
+    docker ps -qa | xargs -n 1 docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} {{ .Name }}' | sed 's/ \// /' | sort && docker ps -a
+}
+
 # Parse command line arguments
 # --networks: Show Docker networks and their containers
 # --running: Show running Docker containers
@@ -45,6 +54,10 @@ while [[ $# -gt 0 ]]; do
     case $1 in
         --networks)
             FUNCTION_QUEUE+=("show_networks")
+            shift
+            ;;
+        --info)
+            FUNCTION_QUEUE+=("info")
             shift
             ;;
         --running)
@@ -70,8 +83,9 @@ if [ "$SHOW_HELP" = true ] || [ ${#FUNCTION_QUEUE[@]} -eq 0 ]; then
     echo "Usage: $0 [--networks] [--running]"
     echo ""
     echo "Options:"
-    echo "  --networks    List all Docker networks and their connected containers with IP addresses"
-    echo "  --running    Display a table of all Docker containers with their details (name, image, status, etc)"
+    echo "  --info      Base information about your containers"
+    echo "  --networks  List all Docker networks and their connected containers with IP addresses"
+    echo "  --running   Display a table of all Docker containers with their details (name, image, status, etc)"
     echo ""
     exit 1
 fi
