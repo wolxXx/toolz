@@ -1,8 +1,4 @@
 # toolz
-### used by me at ubuntu server - maybe you need it, too :) 
-
-[![HitCount](https://hits.dwyl.com/wolxXx/toolz.svg?style=flat-square)](http://hits.dwyl.com/wolxXx/toolz)
-![GitHub CI](https://github.com/dwyl/auth_plug/actions/workflows/ci.yml/badge.svg)
 
 # Table of contents
 [update helper](#update)<br>
