@@ -26,12 +26,17 @@
 - `./switchPHP.sh 8.2` -> enables version 8.2
 - `./switchPHP.sh 8.3` -> enables version 8.3
 - `./switchPHP.sh 8.4` -> enables version 8.4
+- `./switchPHP.sh 8.5` -> enables version 8.5
 - interested on how to install multiple PHP versions at your computer? check https://launchpad.net/~ondrej/+archive/ubuntu/php 
   - sudo apt install software-properties-common -y
   - sudo add-apt-repository ppa:ondrej/php 
   - sudo add-apt-repository ppa:ondrej/apache2
   - sudo apt update
   - sudo apt dist-upgrade -y
+
+    ### PHP 8.5
+    - (with mysql-server)<br>`sudo apt install apache2 apache2-dev apache2-utils apachetop mysql-server mysql-client mytop mycli php8.5 php8.5-bcmath php8.5-cli php8.5-curl php8.5-dev php8.5-gd php8.5-intl php8.5-mbstring php8.5-mysql php8.5-readline php8.5-soap php8.5-tidy php8.5-xml php8.5-xsl php8.5-zip php-xdebug php-imagick unzip`
+    - (without mysql-server)<br> `sudo apt install apache2 apache2-dev apache2-utils apachetop mysql-client mycli php8.5 php8.5-bcmath php8.5-cli php8.5-curl php8.5-dev php8.5-gd php8.5-intl php8.5-mbstring php8.5-mysql php8.5-readline php8.5-soap php8.5-tidy php8.5-xml php8.5-xsl php8.5-zip php-xdebug php-imagick unzip`
 
     ### PHP 8.4
     - (with mysql-server)<br>`sudo apt install apache2 apache2-dev apache2-utils apachetop mysql-server mysql-client mytop mycli php8.4 php8.4-bcmath php8.4-cli php8.4-curl php8.4-dev php8.4-gd php8.4-intl php8.4-mbstring php8.4-mysql php8.4-opcache php8.4-readline php8.4-soap php8.4-tidy php8.4-xml php8.4-xsl php8.4-zip php-xdebug php-imagick unzip`
