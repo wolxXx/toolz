@@ -25,57 +25,86 @@ fun_dockerinfo() {
 }
 
 fun_sort_domains() {
-     local TARGET_DIR="${1:-.}"
+   local TARGET_DIR="${1:-.}"
 
-         if [ ! -d "$TARGET_DIR" ]; then
-             echo "error: directory '$TARGET_DIR' not found." >&2
-             return 1
-         fi
+       if [ ! -d "$TARGET_DIR" ]; then
+           echo "Fehler: Verzeichnis '$TARGET_DIR' nicht gefunden." >&2
+           return 1
+       fi
 
-         (
-             cd "$TARGET_DIR" || return
-             ls -d */ | sed 's|/$||' |
-             awk -F. '
-             {
-                 REVERSE_KEY = ""
-                 for (i = NF - 1; i >= 1; i--) {
-                     REVERSE_KEY = REVERSE_KEY $i (i > 1 ? "." : "")
-                 }
-                 print REVERSE_KEY, $0
-             }
-             ' |
+       (
+           cd "$TARGET_DIR" || return
 
-             sort -k1,1 |
-             awk '
-             {
-                 split($2, parts, ".")
-                 NUM_COMP = length(parts)
+           # NEU: find wird verwendet, um alle Dateien und Verzeichnisse auf erster Ebene zu listen
+           # -maxdepth 1 -mindepth 1: Listet nur Einträge im aktuellen Verzeichnis.
+           # -printf "%f\n": Gibt nur den Dateinamen (ohne ./ oder /) aus.
+           find . -maxdepth 1 -mindepth 1 -printf "%f\n" |
 
-                 CURRENT_GROUP = parts[NUM_COMP-1] "." parts[NUM_COMP]
+           # 1. AWK zum Erstellen des Reverse-Keys
+           awk -F. '
+           {
+               # NF ist die Anzahl der Felder (Komponenten)
+               REVERSE_KEY = ""
+               for (i = NF - 1; i >= 1; i--) {
+                   REVERSE_KEY = REVERSE_KEY $i (i > 1 ? "." : "")
+               }
+               print REVERSE_KEY, $0
+           }
+           ' |
 
-                 if (CURRENT_GROUP != PREVIOUS_GROUP && PREVIOUS_GROUP != "") {
-                     print ""
-                 }
+           # 2. SORT: Sortiert primär nach dem Reverse-Key
+           sort -k1,1 |
 
-                 if (CURRENT_GROUP != PREVIOUS_GROUP) {
-                     print "## " CURRENT_GROUP " ##"
-                     print "-------------------"
-                 }
+           # 3. AWK: Formatiert die Baumstruktur
+           awk '
+           {
+               split($2, parts, ".")
+               NUM_COMP = length(parts)
 
-                 HOST_NAME = ""
-                 if (NUM_COMP > 2) {
-                     for (i=1; i <= NUM_COMP - 2; i++) {
-                         HOST_NAME = HOST_NAME parts[i] (i < NUM_COMP - 2 ? "." : "")
-                     }
-                 } else {
-                      HOST_NAME = "(root)"
-                 }
+               # Gruppierung: SLD + TLD (die letzten beiden Komponenten)
+               # Prüfen, ob der Name mindestens zwei Punkte hat, sonst wird der letzte als TLD angenommen
+               if (NUM_COMP < 2) {
+                   CURRENT_GROUP = $2 # Name selbst als Gruppe (z.B. "config")
+               } else {
+                   CURRENT_GROUP = parts[NUM_COMP-1] "." parts[NUM_COMP] # z.B. kwatsh.de
+               }
 
-                 print "├── " HOST_NAME
-                 PREVIOUS_GROUP = CURRENT_GROUP
-             }
-             '
-         )
+               # -----------------------------------------------------
+               # A. Trennung und Überschrift, wenn die Gruppe wechselt
+               if (CURRENT_GROUP != PREVIOUS_GROUP && PREVIOUS_GROUP != "") {
+                   print "" # Leerzeile
+               }
+
+               if (CURRENT_GROUP != PREVIOUS_GROUP) {
+                   # Erstellt die Überschrift ## kwatsh.de ##
+                   print "## " CURRENT_GROUP " ##"
+                   print "-------------------"
+               }
+
+               # -----------------------------------------------------
+               # B. Ausgabe des Hostnamens/Anwendungsnamens (die restlichen Komponenten)
+
+               HOST_NAME = ""
+               if (NUM_COMP > 2) {
+                   # Der Hostname besteht aus den Komponenten 1 bis NUM_COMP - 2
+                   for (i=1; i <= NUM_COMP - 2; i++) {
+                       HOST_NAME = HOST_NAME parts[i] (i < NUM_COMP - 2 ? "." : "")
+                   }
+               } else if (NUM_COMP == 2) {
+                   # Fall: nur SLD.TLD, der Hostname ist leer
+                   HOST_NAME = "(Basis-Domain)"
+               } else {
+                   # Fall: Nur eine Komponente ("config"), Hostname ist der Name selbst
+                   HOST_NAME = parts[1]
+               }
+
+               print "├── " HOST_NAME
+
+               # Status speichern
+               PREVIOUS_GROUP = CURRENT_GROUP
+           }
+           '
+       )
 }
 
 alias dockerinfo="fun_dockerinfo"

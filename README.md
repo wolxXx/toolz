@@ -2,6 +2,7 @@
 
 # Table of contents
 [update helper](#update)<br>
+[bash toolz](#aliases)<br>
 [switch PHP version](#switch)<br>
 [fix PHP ini settings](#fixphp)<br>
 [lxc to hosts](#lxc2hosts)<br>
@@ -14,6 +15,39 @@
 - `./update.sh`
 - one-line: `wget https://raw.githubusercontent.com/wolxXx/toolz/main/update.sh && chmod +x update.sh && ./update.sh`
 - you might want to cache your apt packages, check out apt-cacher-ng 
+
+## use aliases.sh - a tool that brings some bash commands <a name="aliases"></a>
+- source the aliases in you .bashrc
+
+### dockerinfo
+- prints your docker containers in a table
+- table columns are
+  - name
+  - status
+  - image
+  - ip
+  - network
+- you can sort the columns with these flags
+  - --ip
+  - --name
+  - --status
+  - --image
+  - --network
+
+### i
+- updates remote information
+- prints the git information in the current directory
+  - origin
+  - config.user.email
+  - config.user.name
+  - current branch
+  - git status
+
+### sort_domains
+- given a directory with a list of domains, this command sorts them by the domain
+- if no argument is given, the current directory will be sorted otherwise the path behind the argument
+- used for maybe sorted lets encrypt certificates
+- `sort_domains /etc/letsencrypt/live`
 
 ## grab switchPHP.sh - a tool for easily switching the PHP version, if installed <a name="switch"></a>
 - easily disables all possible installed apache modules
